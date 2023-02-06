@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import io from "socket.io-client";
+import {io} from "socket.io-client";
 import "./Chat.css";
 
-const ENDPOINT = "localhost:3000";
+const ENDPOINT = "localhost:5000";
 let socket;
 
 const Chat = ()=>{
@@ -14,10 +14,10 @@ const Chat = ()=>{
     const [room, setRoom] = useState('');
     
     useEffect(()=>{
-        const { name, room } = queryString.parse(location.search);
+        const {name, room} = queryString.parse(location.search);
         
         
-        socket = io(ENDPOINT, {transports: ['websocket']});
+        socket = io(ENDPOINT);
         socket.emit('join', { name, room });
 
         setName(name);
